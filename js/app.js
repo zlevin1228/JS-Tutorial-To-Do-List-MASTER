@@ -54,3 +54,14 @@ document.addEventListener("keyup",function(event){
         id++
     }
 })
+
+list.addEventListener("click", function(event){
+    let element = event.target
+    const elementJOB = event.target.attributes.job.value
+    if(elementJOB == "complete"){
+        completeToDo(element)
+    }
+    if(elementJOB == "delete"){
+        removeToDo(element)
+    }
+}))
