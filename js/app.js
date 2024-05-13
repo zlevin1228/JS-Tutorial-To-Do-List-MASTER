@@ -84,3 +84,10 @@ function loadToDo(array){
         addToDo(item.name, item.id, item.done, item.trashs)
     })
 }
+
+const clear = document.querySelector(".clear")
+
+clear.addEventListener('click', function(){
+    localStorage.clear()
+    location.reload()
+})
