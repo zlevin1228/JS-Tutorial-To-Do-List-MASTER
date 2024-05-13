@@ -33,6 +33,11 @@ function completeToDo(element){
     LIST[element.id].done = LIST[element.id].done ? false : true
 }
 
+function removeToDo(element){
+    element.parentNode.parentNode.removeChild(element.parentNode)
+    LIST[element.id].trash = true
+}
+
 document.addEventListener("keyup",function(event){
     if(event.keyCode == 13){
         const toDo = input.value
