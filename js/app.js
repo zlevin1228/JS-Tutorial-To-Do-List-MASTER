@@ -12,7 +12,30 @@ const UNCHECK = "fa-circle-thin"
 const LINE_THROUGH = 'lineThrough'
 
 // variables
-let LIST = [], id = 0
+let LIST, id;
+
+// get item from local storage
+let data = localStorage.getItem("TODO")
+
+// check if data is not empty
+if(data){
+    LIST = JSON.parse(data)
+    loadToDo(LIST)
+    id = LIST.length
+} else {
+    LIST = []
+    id = 0
+}
+
+// load items to the user's interface
+function loadToDo(array){
+    array.forEach(function(item){
+        addToDo(item.name, item.id, item.done, item.trash)
+    })
+}
+
+// clear the local storage
+
 
 // Show todays date
 const options = { weekday:'long', month:'short', day:'numeric'}
@@ -26,7 +49,7 @@ function addToDo (toDo, id, done, trash) {
     }
     const DONE = done ? CHECK : UNCHECK
     const LINE = done ? LINE_THROUGH : ""
-    const item = `
+    const text = `
 <li class="item">
     <i class="fa ${DONE} co" job="complete" id="${id}"></i>
     <p class="text ${LINE}">${toDo}</p>
@@ -49,9 +72,11 @@ document.addEventListener("keyup",function(event){
                 done: false,
                 trash: false
             })
+            localStorage.setItem("TODO",JSON.stringify(LIST))
+            id++
         }
         input.value = ""
-        id++
+        
     }
 })
 
@@ -79,28 +104,11 @@ list.addEventListener("click", function(event){
     if(elementJOB == "remove"){
         removeToDo(element)
     }
+    localStorage.setItem("TODO",JSON.stringify(LIST))
 })
 
 localStorage.setItem('key', 'value')
 let variable = localStorage.getItem('key')
-localStorage.setItem("TODO",JSON.stringify(LIST))
-let data = localStorage.getItem("TODO")
-if(data){
-    LIST = JSON.parse(data)
-    loadToDo(LIST)
-    id = LIST.length
-} else {
-    LIST = []
-    id = 0
-}
-
-function loadToDo(array){
-    array.forEach(function(item){
-        addToDo(item.name, item.id, item.done, item.trashs)
-    })
-}
-
-const clear = document.querySelector(".clear")
 
 clear.addEventListener('click', function(){
     localStorage.clear()
